@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity One — Feature Scope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root{
+    --copper:#c47a3a; --copper-2:#a9632b; --copper-soft:rgba(196,122,58,.12);
+    --gold:#d9a15b;
+    --obsidian:#0b0d12; --graphite:#1b1f28;
+    --bg:#faf9f7; --surface:#ffffff; --surface-2:#f3f1ed; --border:#e8e4db;
+    --text:#0b0d12; --soft:#2c313b; --muted:#5d6678;
+    --ok:#1f7a4d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.62;font-size:15px}
+  h1,h2,h3,.disp{font-family:'Poppins',system-ui,sans-serif;letter-spacing:-.01em}
+  a{color:var(--copper);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 30px}
+  b{color:var(--text)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(11,13,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid #1c212b}
+  nav .wrap{display:flex;align-items:center;gap:16px;height:62px}
+  .logo{display:inline-block;width:57px;height:30px;background:url(assets/logo-copper.png) no-repeat;background-size:137px 91px;background-position:-37px -24px}
+  nav .nm{font-family:'Poppins';font-weight:700;color:#fff;font-size:15px;letter-spacing:.04em}
+  nav .nm span{color:var(--copper)}
+  nav .links{margin-left:auto;display:flex;gap:20px}
+  nav .links a{color:#aab2c0;font-size:13px;font-weight:500}
+  nav .links a:hover{color:#fff}
+  @media(max-width:980px){nav .links{display:none}}
+
+  /* hero */
+  .hero{position:relative;background:var(--obsidian);color:#fff;overflow:hidden;border-bottom:1px solid #1c212b}
+  .hero .bg{position:absolute;inset:0;background:url(assets/hero-dark.png) no-repeat right center;background-size:cover;opacity:.92}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--obsidian) 28%,rgba(11,13,18,.72) 50%,rgba(11,13,18,.15) 78%,transparent)}
+  .hero .wrap{position:relative;z-index:2;padding:92px 30px 82px}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,122,58,.16);border:1px solid rgba(196,122,58,.4);color:var(--gold);padding:6px 15px;border-radius:999px;font-size:12px;font-weight:600;margin-bottom:24px;letter-spacing:.03em}
+  .hero h1{font-size:52px;font-weight:800;line-height:1.05;max-width:780px}
+  .hero h1 em{font-style:normal;color:var(--copper)}
+  .hero p.sub{font-size:18px;color:#c2cad6;max-width:660px;margin-top:20px}
+  .stats{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap}
+  .stats div b{display:block;font-family:'Poppins';font-size:30px;font-weight:800;color:#fff;line-height:1}
+  .stats div span{font-size:12.5px;color:#8b93a1;letter-spacing:.02em}
+
+  section{padding:60px 0;border-bottom:1px solid var(--border)}
+  .kicker{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);margin-bottom:11px}
+  h2{font-size:30px;font-weight:800;margin-bottom:13px}
+  .lede{font-size:16.5px;color:var(--soft);max-width:820px}
+
+  /* module blocks */
+  .mod{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px 30px;margin-top:20px}
+  .mod .head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .mod .ic{width:46px;height:46px;border-radius:13px;background:var(--copper-soft);color:var(--copper);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .mod h3{font-size:19px;font-weight:700}
+  .mod .sub{font-size:12.5px;color:var(--muted)}
+  .mod .cols{columns:2;column-gap:34px;margin-top:16px}
+  @media(max-width:780px){.mod .cols{columns:1}}
+  ul.feat{list-style:none}
+  ul.feat li{padding:5px 0 5px 26px;position:relative;color:var(--soft);font-size:13.7px;break-inside:avoid}
+  ul.feat li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--copper);position:absolute;left:0;top:6px;font-size:10px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:22px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:13px 16px;background:var(--surface-2)}
+  td{padding:12px 16px;border-top:1px solid var(--border);color:var(--soft);vertical-align:top}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em;white-space:nowrap}
+  .tag.req{background:rgba(192,86,63,.12);color:#b5513b}
+  .tag.core{background:var(--copper-soft);color:var(--copper-2)}
+  .tag.opt{background:var(--surface-2);color:var(--muted)}
+  .tag.plan{background:rgba(31,122,77,.12);color:var(--ok)}
+
+  /* expansion */
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  @media(max-width:820px){.three{grid-template-columns:1fr}}
+  .mkt{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 24px;position:relative}
+  .mkt.now{border-color:var(--copper);box-shadow:0 14px 40px rgba(196,122,58,.14)}
+  .mkt .flag{font-size:24px;margin-bottom:10px}
+  .mkt h3{font-size:18px;font-weight:700}
+  .mkt .when{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .mkt .when.live{color:var(--ok)}
+  .road{margin-top:30px;position:relative;padding-left:30px;border-left:2px solid var(--border)}
+  .road .step{position:relative;padding:0 0 24px}
+  .road .step:last-child{padding-bottom:0}
+  .road .step::before{content:"";position:absolute;left:-37px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--copper);box-shadow:0 0 0 4px var(--copper-soft)}
+  .road .step .ph{font-size:11px;font-weight:700;color:var(--copper);text-transform:uppercase;letter-spacing:.06em}
+  .road .step b{font-size:16px;display:block;margin:2px 0}
+  .road .step p{font-size:13.3px;color:var(--soft)}
+  .pillbar{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+  .pill{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--soft);display:inline-flex;align-items:center;gap:8px}
+  .pill i{color:#c0563f}
+
+  footer{background:var(--obsidian);color:#9aa0ac;padding:50px 0;text-align:center}
+  footer .nm{font-family:'Poppins';font-weight:700;color:#fff;font-size:17px;letter-spacing:.04em}
+  footer .nm span{color:var(--copper)}
+  footer p{font-size:13px;margin-top:8px}
+
+  .print{position:fixed;right:20px;bottom:20px;background:var(--copper);color:#fff;border:none;border-radius:12px;padding:13px 19px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 10px 28px rgba(196,122,58,.45);font-family:'Inter'}
+  @media(max-width:860px){.hero h1{font-size:36px}.hero .veil{background:linear-gradient(180deg,rgba(11,13,18,.55),var(--obsidian))}}
+
+  /* ---------- PDF / PRINT ---------- */
+  @page{size:A4;margin:13mm 12mm}
+  @page:first{margin:0}
+  @media print{
+    *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    html,body{background:#fff;font-size:10.6px}
+    .print,nav{display:none !important}
+    .wrap{max-width:none;padding:0 4mm}
+
+    /* hero as a full-bleed cover band on page 1 */
+    .hero{break-inside:avoid;break-after:page;border-bottom:none}
+    .hero .wrap{padding:34mm 14mm 26mm}
+    .hero h1{font-size:33px;max-width:none}
+    .hero p.sub{font-size:13px;margin-top:14px}
+    .stats{margin-top:26px;gap:30px}
+    .stats div b{font-size:22px}
+    .badge{margin-bottom:16px}
+
+    /* section rhythm + no orphaned headings */
+    section{padding:13px 0;border-bottom:none}
+    section + section{border-top:1px solid var(--border)}
+    h2{font-size:20px;margin-bottom:8px;break-after:avoid}
+    h3{break-after:avoid}
+    .kicker{margin-bottom:7px;break-after:avoid}
+    .lede{font-size:12px;break-after:avoid}
+
+    /* keep blocks whole */
+    .mod,.mkt,.road .step,.three,.pillbar,tr{break-inside:avoid}
+    .mod{padding:16px 18px;margin-top:12px;box-shadow:none}
+    .mod .head{break-after:avoid}
+    .mod .cols{column-gap:24px;margin-top:10px}
+    ul.feat li{font-size:11px;padding:3px 0 3px 22px}
+
+    /* tables print clean with repeating headers */
+    table{margin-top:14px;box-shadow:none;font-size:10.4px}
+    thead{display:table-header-group}
+    th,td{padding:8px 11px}
+
+    .pillbar{gap:6px;margin-top:14px}
+    .pill{padding:6px 12px;font-size:11px;box-shadow:none}
+
+    /* dark blocks: force the fill so white text stays readable on paper */
+    .hero,.mod[style*="obsidian"],footer{ background:var(--obsidian) !important; }
+
+    footer{padding:24px 0;break-before:avoid}
+    .three{gap:12px}
+    .road{margin-top:18px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="logo"></span>
+    <span class="nm">VELOCITY <span>ONE</span></span>
+    <div class="links">
+      <a href="#core">Core platform</a>
+      <a href="#vehicle">Vehicles</a>
+      <a href="#crm">CRM & deals</a>
+      <a href="#checks">Vehicle data</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#docs">Documents</a>
+      <a href="#ops">Operations</a>
+      <a href="#api">Integrations</a>
+      <a href="#expansion">Expansion</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="bg"></div>
+  <div class="veil"></div>
+  <div class="wrap">
+    <div class="badge"><i class="fa-solid fa-list-check"></i> Feature Scope · Dealer Management Platform · NZ → AU → US</div>
+    <h1>The complete scope of <em>everything</em> Velocity One will do.</h1>
+    <p class="sub">Every feature the platform will deliver — across stock, CRM, the deal &amp; finance engine, vehicle data, compliance, documents, e-signing, operations, reporting and the open API — launched in New Zealand and architected to expand into Australia and the United States.</p>
+    <div class="stats">
+      <div><b>10</b><span>Feature modules</span></div>
+      <div><b>9</b><span>Generated documents</span></div>
+      <div><b>15+</b><span>Integrations &amp; data feeds</span></div>
+      <div><b>3</b><span>Markets — NZ · AU · US</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="intro">
+  <div class="wrap">
+    <div class="kicker">The agreed scope</div>
+    <h2>One platform to run the entire dealership</h2>
+    <p class="lede">This document is the full inventory of features Velocity One will deliver — the single source of truth for what is in scope. It follows the complete journey of the dealership: a vehicle arriving in stock, a customer enquiry, the negotiation, the deal and its finances, the NZ compliance paperwork signed on the spot, delivery, servicing, and the reporting that ties it all together — then opens it all up through an open developer API and a built-in CRM. The platform is designed <b>demo-first</b>, so every data-driven feature works on demonstration data from day one and connects to each live New Zealand data source the moment its credentials are provisioned.</p>
+  </div>
+</section>
+
+<section id="core">
+  <div class="wrap">
+    <div class="kicker">Foundation</div>
+    <h2>Core platform &amp; security</h2>
+    <p class="lede">The multi-tenant SaaS foundation every module runs on.</p>
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-shield-halved"></i></div><div><h3>Platform</h3><div class="sub">Cloud, secure &amp; multi-tenant</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Cloud-hosted — accessible from anywhere</li>
+          <li>Runs in any browser — Windows, Mac, tablet &amp; phone</li>
+          <li>Multi-tenant with isolated, per-dealer workspaces</li>
+          <li>Secure sign-in, sessions &amp; registration</li>
+          <li>Role-based access control for staff</li>
+          <li>Per-dealer branding — logo &amp; colours</li>
+          <li>Object storage for photos &amp; documents at scale</li>
+          <li>Unlimited users &amp; installations</li>
+          <li>Modern, fast, continuously-updated interface</li>
+          <li>Automatic daily backups</li>
+          <li>Subscription billing &amp; onboarding</li>
+          <li>Light &amp; dark interface</li>
+          <li>Notifications &amp; in-app alerts — leads, tasks &amp; reminders</li>
+          <li>Data onboarding — import stock, contacts &amp; history from the dealer's existing system</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vehicle">
+  <div class="wrap">
+    <div class="kicker">The yard</div>
+    <h2>Vehicle &amp; stock management</h2>
+    <p class="lede">The heart of the dealership — every vehicle, fully specified, costed and merchandised.</p>
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-car"></i></div><div><h3>Vehicle Management</h3><div class="sub">Stock, pricing, costs &amp; media</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Powerful stock search &amp; filtering across the yard</li>
+          <li>Saved &amp; predefined stock views</li>
+          <li>All vehicle types — cars, trucks, motorcycles, caravans, motorhomes, machinery &amp; boats</li>
+          <li>Full specification — year, make, model, variant, body, fuel, transmission, engine, colours, doors, seats, drive</li>
+          <li>Detailed ownership, exterior, interior &amp; mechanical characteristics</li>
+          <li>VIN, chassis &amp; registration capture</li>
+          <li>WoF / CoF / rego expiry tracking</li>
+          <li>Retail, wholesale &amp; special pricing + On-Road Costs (ORC)</li>
+          <li>Purchase cost &amp; detailed expense tracking</li>
+          <li>Automatic margin calculation</li>
+          <li>Recon, warranty, import vs local costs — estimate vs actual, paid/unpaid</li>
+          <li>Multi-currency expenses</li>
+          <li>Vehicle profit calculator (multi-currency)</li>
+          <li>Up to 20 images per vehicle — upload, URL, set primary, delete</li>
+          <li>Drag &amp; drop image reorder</li>
+          <li>Image overlays &amp; dynamic posters</li>
+          <li>Advertising copy with text library &amp; wildcards</li>
+          <li>Per-vehicle advertising channel control</li>
+          <li>Odometer history, auto-recorded on change</li>
+          <li>Simple stock numbering system</li>
+          <li>One-click vehicle <b>Copy</b> for fast entry</li>
+          <li>Vehicle template system — presets &amp; generic expenses</li>
+          <li>Auto-populate a vehicle from a vehicle check</li>
+          <li>Overseas auction &amp; shipping info — auction sheets &amp; photos</li>
+          <li>Vehicle activity history — test drives &amp; quotes</li>
+          <li>Store documents against every vehicle</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="crm">
+  <div class="wrap">
+    <div class="kicker">Lead to sale</div>
+    <h2>CRM, opportunities &amp; the deal engine</h2>
+    <p class="lede">The full customer journey — from first enquiry through to a finalised, GST-correct deal.</p>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-bullseye"></i></div><div><h3>Opportunities &amp; CRM</h3><div class="sub">The sales pipeline</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Pipeline with status, value &amp; probability</li>
+          <li>Activity history — enquiries, test drives, price-my-trade, quotes</li>
+          <li>Finance calculations &amp; finance applications</li>
+          <li>Feedback · notes · follow-ups · next actions</li>
+          <li>Incoming &amp; outgoing emails on the opportunity</li>
+          <li>Origin &amp; referral tracking</li>
+          <li>Assign to salespeople</li>
+          <li>Licence-photo capture &amp; test-drive declaration print</li>
+          <li>Quick responses — notes &amp; emails — from within the system</li>
+          <li>Funnel / progress view with minimal entry</li>
+          <li>One-click <b>convert opportunity → sale</b></li>
+          <li>Won / Lost measurement &amp; pipeline reporting</li>
+          <li>Built-in CRM, or sync to the dealer's own via the API</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-address-book"></i></div><div><h3>Contacts</h3><div class="sub">Customers &amp; suppliers</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Customer &amp; supplier record types</li>
+          <li>Full details — physical &amp; postal address, phone, mobile, email</li>
+          <li>Finance settings per supplier — buy/sell rates, term, fees</li>
+          <li>Linked opportunities &amp; full deal history</li>
+          <li>Store documents against every contact</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-file-signature"></i></div><div><h3>Sales &amp; Finance Engine</h3><div class="sub">The deal — done right</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Sell multiple vehicles per deal</li>
+          <li>Trade-ins on the deal, including multiple trade-ins &amp; encumbrance details</li>
+          <li>Multiple customers &amp; business manager per deal</li>
+          <li>Accessories &amp; add-on products, from libraries or one-off</li>
+          <li>Detailed finance — financier, amount, term, rate, commission &amp; profit</li>
+          <li>Insurance products — MBI, GAP, LPI / PPI</li>
+          <li>Payments &amp; instalments with printed receipts</li>
+          <li>Live per-deal profit &amp; loss</li>
+          <li>NZ 15% GST computed across the deal</li>
+          <li>Sale workflow — In Progress · Completed · Finalised</li>
+          <li>Retail vs wholesale tracking</li>
+          <li>Delivery management</li>
+          <li>Store documents against every sale</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-clipboard-check"></i></div><div><h3>Appraisals &amp; Trade-ins</h3><div class="sub">Value with confidence</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Structured appraisal capture against any vehicle or lead</li>
+          <li>Pulls market valuation &amp; condition into a trade figure</li>
+          <li>Photos &amp; reconditioning estimate</li>
+          <li>Feeds straight into the deal as a trade-in</li>
+          <li>"Price my trade" web enquiries captured to the pipeline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="checks">
+  <div class="wrap">
+    <div class="kicker">Trusted NZ vehicle data</div>
+    <h2>Vehicle checks — every check a NZ dealer needs</h2>
+    <p class="lede">Type a plate or VIN and Velocity One pulls a complete, audit-logged picture of the vehicle from New Zealand's trusted sources, then auto-fills the stock record and the compliance documents. Providers are pluggable — the platform works on demonstration data and connects to each live source the moment its credentials are provided.</p>
+    <table>
+      <tr><th>Check</th><th>What it returns</th><th>Source</th></tr>
+      <tr><td><b>Rego / VIN lookup</b></td><td>Full identity — year, make, model, variant, body, engine, fuel, transmission, colours, first NZ registration</td><td>CarJam · MotorWeb · NZTA Motochek</td></tr>
+      <tr><td><b>PPSR security interest</b></td><td>"Money owing" disclosure — financed/secured status &amp; secured parties (a required CIN field)</td><td>MotorWeb · PPSR (Companies Office)</td></tr>
+      <tr><td><b>Market valuation</b></td><td>Trade &amp; retail price guidance for pricing &amp; trade-in appraisals</td><td>AutoGrab · RedBook · Glass's</td></tr>
+      <tr><td><b>Ownership &amp; odometer history</b></td><td>Number of owners, recorded odometer readings, tamper indicators</td><td>CarJam · MotorWeb</td></tr>
+      <tr><td><b>Stolen &amp; imported checks</b></td><td>Stolen-vehicle flag, import status &amp; damage history where available</td><td>MotorWeb VIR</td></tr>
+      <tr><td><b>WoF / CoF &amp; rego status</b></td><td>Current warrant/certificate of fitness &amp; registration/licence expiry</td><td>NZTA · CarJam</td></tr>
+      <tr><td><b>Energy &amp; emissions (VEEEL)</b></td><td>Official Fuelsaver energy &amp; CO₂ star ratings, fuel economy, running cost &amp; RUC</td><td>EECA Fuelsaver</td></tr>
+    </table>
+    <p style="margin-top:14px;font-size:12.5px;color:var(--muted)">Every lookup is stored against the vehicle with a timestamp and the requesting user — a complete audit trail for compliance and dispute resolution.</p>
+  </div>
+</section>
+
+<section id="compliance">
+  <div class="wrap">
+    <div class="kicker">New Zealand compliance</div>
+    <h2>Built for NZ law &amp; the NZTA</h2>
+    <p class="lede">The regulated documents and transactions a NZ motor vehicle trader needs, generated from live deal data and signed on the spot.</p>
+    <table>
+      <tr><th>Requirement</th><th>What the platform provides</th></tr>
+      <tr><td><b>Consumer Information Notice (CIN)</b></td><td>One-click CIN with every required field — trader &amp; RMVT number, NZ first-registration, odometer accuracy, PPSR money-owing, GST price &amp; on-road costs, buyer acknowledgement &amp; signature.</td></tr>
+      <tr><td><b>VEEEL energy &amp; emissions label</b></td><td>The mandatory Fuelsaver label — energy &amp; CO₂ star ratings, fuel economy, estimated running cost &amp; Road User Charges.</td></tr>
+      <tr><td><b>NZTA transactions</b></td><td>MR13C (trader acquisition) &amp; MR13B (change of registered person) lodged with Waka Kotahi — replacing the paper forms.</td></tr>
+      <tr><td><b>PPSR security check</b></td><td>Money-owing disclosure flows from the vehicle check straight onto the CIN.</td></tr>
+      <tr><td><b>Registered Motor Vehicle Trader</b></td><td>RMVT number carried on every customer document.</td></tr>
+      <tr><td><b>GST</b></td><td>NZ 15% GST computed across every deal &amp; receipt.</td></tr>
+    </table>
+    <p style="margin-top:14px;font-size:12.5px;color:var(--muted)">Governed by the Motor Vehicle Sales Act 2003, Consumer Information Standards (Used Motor Vehicles) Regulations 2008, Consumer Guarantees Act 1993 &amp; Fair Trading Act 1986. Final document wording confirmed with a NZ motor-trade advisor before go-live.</p>
+  </div>
+</section>
+
+<section id="docs">
+  <div class="wrap">
+    <div class="kicker">Document generation &amp; e-sign</div>
+    <h2>A complete paperwork suite — signed on the spot</h2>
+    <p class="lede">Professional, dealer-branded PDFs produced from live data, then signable directly in Velocity One — on screen, a tablet on the desk, or a secure link to the customer's phone. No re-keying, no per-envelope signing bill.</p>
+    <div class="pillbar">
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Consumer Information Notice (CIN)</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Vehicle Offer &amp; Sale Agreement</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Vehicle Cost Breakdown</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Vehicle Summary Sheet</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>VEEEL Energy Label</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Wholesale Agreement</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Delivery Checklist</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Payment Receipt</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Finance Application Summary</span>
+    </div>
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-signature"></i></div><div><h3>Built-in e-signatures</h3><div class="sub">A DocuSign, inside the platform</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Generate any document from live deal data</li>
+          <li>Draw-to-sign on any touch or mouse device</li>
+          <li>Signer name, timestamp &amp; signed-by recorded against the document</li>
+          <li>Signature image embedded; document flagged signed</li>
+          <li>Send-to-customer signing link for remote deals</li>
+          <li>Signed documents locked with a full audit trail</li>
+          <li>No per-envelope fees — part of the platform</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ops">
+  <div class="wrap">
+    <div class="kicker">Run the business</div>
+    <h2>Operations, servicing &amp; reporting</h2>
+    <p class="lede">The back office, the workshop diary, the wholesale floor and the numbers that tie it all together.</p>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-calendar-days"></i></div><div><h3>Servicing &amp; Scheduling</h3><div class="sub">The workshop &amp; the diary</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Bookings calendar — service, test drives, deliveries &amp; valuations</li>
+          <li>Appointment status — scheduled · completed · no-show</li>
+          <li>Assign to staff, link to a customer &amp; vehicle</li>
+          <li>Today / upcoming views &amp; reminders</li>
+          <li>Workshop &amp; pre-delivery service jobs tracked to the vehicle</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-warehouse"></i></div><div><h3>Operations &amp; back office</h3><div class="sub">Purchase orders, parts, tasks &amp; files</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li><b>Purchase Orders</b> — line items, approval workflow, totals</li>
+          <li><b>Parts</b> inventory with stock levels &amp; low-stock alerts</li>
+          <li><b>Tasks</b> &amp; reminders with due dates &amp; overdue flags</li>
+          <li><b>Documents</b> — attach files to any vehicle, contact or deal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-handshake"></i></div><div><h3>Wholesale Marketplace</h3><div class="sub">Inter-dealer trading</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Wholesale marketplace across dealerships</li>
+          <li>List / unlist stock for wholesale</li>
+          <li>Wholesale agreement documents &amp; e-sign</li>
+          <li>Formal transfer &amp; ownership history</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="head"><div class="ic"><i class="fa-solid fa-chart-line"></i></div><div><h3>Reports &amp; Insights</h3><div class="sub">Know the numbers</div></div></div>
+      <div class="cols">
+        <ul class="feat">
+          <li>Sales by status &amp; by salesperson (Manager's report)</li>
+          <li>Stock by status &amp; by make · ageing</li>
+          <li>Total profit, margin &amp; recent deals</li>
+          <li>Live performance dashboards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="api">
+  <div class="wrap">
+    <div class="kicker">Integrations &amp; APIs</div>
+    <h2>Every connection — and the API we expose</h2>
+    <p class="lede">The full set of services Velocity One integrates with. Each is built demo-first and connects to its live source the moment credentials are provisioned. And uniquely, Velocity One ships its own open API — the incumbent has none.</p>
+    <table>
+      <tr><th>Service</th><th>Purpose</th><th>Priority</th></tr>
+      <tr><td><b>RMVT registration</b> (MBIE)</td><td>Legal prerequisite to trade; RMVT number prints on every CIN</td><td><span class="tag req">Required</span></td></tr>
+      <tr><td><b>NZTA / Waka Kotahi</b></td><td>MR13C &amp; MR13B registration transactions (RealMe-secured)</td><td><span class="tag req">Required</span></td></tr>
+      <tr><td><b>EECA Fuelsaver / VEEEL</b></td><td>Official energy &amp; emissions label, mandatory at point of sale</td><td><span class="tag req">Required</span></td></tr>
+      <tr><td><b>PPSR security data</b></td><td>"Money owing" check disclosed on the CIN (via MotorWeb/CarJam or direct)</td><td><span class="tag req">Required</span></td></tr>
+      <tr><td><b>CarJam</b></td><td>Rego/VIN lookup, plate &amp; ownership history — consolidated NZ data</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>MotorWeb</b></td><td>Vehicle Information Report, PPSR security, stolen check</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>AutoGrab / RedBook / Glass's</b></td><td>Market valuation — trade &amp; retail pricing</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>TradeMe (Motors)</b></td><td>Publish &amp; sync stock listings; pull leads &amp; watchlist (OAuth 1.0a)</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>Xero</b></td><td>Push per-deal P&amp;L + invoices to the ledger (OAuth2)</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>Email</b> (SendGrid / Postmark / SES)</td><td>Lead emails, deal documents &amp; CIN delivery</td><td><span class="tag core">Core</span></td></tr>
+      <tr><td><b>NZTA Motochek</b></td><td>Direct rego/VIN details (optional if using CarJam/MotorWeb)</td><td><span class="tag opt">Optional</span></td></tr>
+      <tr><td><b>MYOB</b></td><td>Accounting connector for MYOB dealers</td><td><span class="tag opt">Optional</span></td></tr>
+      <tr><td><b>SMS</b> (Twilio)</td><td>Customer SMS &amp; test-drive / service reminders</td><td><span class="tag opt">Optional</span></td></tr>
+      <tr><td><b>Finance providers</b> (UDC, MTF, Avanti, Heartland)</td><td>Finance calculations &amp; applications from the deal</td><td><span class="tag plan">Planned</span></td></tr>
+      <tr><td><b>Insurance / MBI</b> (Autosure, Protecta, Provident)</td><td>Mechanical breakdown &amp; GAP quotes &amp; policies</td><td><span class="tag plan">Planned</span></td></tr>
+      <tr><td><b>Extra marketplaces</b> (FB Marketplace, Need A Car)</td><td>Additional listing channels</td><td><span class="tag plan">Planned</span></td></tr>
+    </table>
+
+    <div class="mod" style="background:var(--obsidian);border:none;color:#fff;margin-top:24px">
+      <div class="head"><div class="ic" style="background:rgba(196,122,58,.2)"><i class="fa-solid fa-code"></i></div><div><h3 style="color:#fff">The open Velocity One API</h3><div class="sub" style="color:#9aa3b2">What we expose to dealers</div></div></div>
+      <div class="cols">
+        <ul class="feat" style="color:#c2cad6">
+          <li style="color:#c2cad6">REST endpoints for stock, contacts, opportunities &amp; deals</li>
+          <li style="color:#c2cad6">Per-dealer API keys with scoped access</li>
+          <li style="color:#c2cad6">Push stock to the dealer's own website in real time</li>
+          <li style="color:#c2cad6">Connect an external CRM, BI tool or custom integration</li>
+          <li style="color:#c2cad6">Webhooks for new leads &amp; status changes</li>
+          <li style="color:#c2cad6"><b style="color:#fff">The incumbent has no public API at all.</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expansion">
+  <div class="wrap">
+    <div class="kicker">International expansion</div>
+    <h2>One platform, three markets — NZ, then Australia &amp; the US</h2>
+    <p class="lede">Velocity One launches in New Zealand, but it is built market-agnostic from the ground up. Everything that differs between countries — tax, legal disclosures, vehicle-data sources, registration forms and listing channels — lives in a <b>pluggable localisation layer</b>. Expanding to a new country means swapping that layer for the market, not rebuilding the application. The core deal engine, CRM, stock, e-sign and API are identical everywhere.</p>
+
+    <div class="three">
+      <div class="mkt now">
+        <div class="flag">🇳🇿</div>
+        <div class="when live">Market 1 · Launch</div>
+        <h3>New Zealand</h3>
+        <ul class="feat" style="margin-top:10px">
+          <li>The full platform, live and compliant</li>
+          <li>CIN · VEEEL · NZTA MR13B/C · PPSR · RMVT</li>
+          <li>15% GST · NZD</li>
+          <li>CarJam · MotorWeb · TradeMe Motors</li>
+        </ul>
+      </div>
+      <div class="mkt">
+        <div class="flag">🇦🇺</div>
+        <div class="when">Market 2 · Expansion</div>
+        <h3>Australia</h3>
+        <ul class="feat" style="margin-top:10px">
+          <li>Closest neighbour — largest near-term TAM</li>
+          <li>State-based licensing &amp; disclosures</li>
+          <li>10% GST + state stamp duty</li>
+          <li>PPSR · carsales.com.au</li>
+        </ul>
+      </div>
+      <div class="mkt">
+        <div class="flag">🇺🇸</div>
+        <div class="when">Market 3 · Scale</div>
+        <h3>United States</h3>
+        <ul class="feat" style="margin-top:10px">
+          <li>Enormous market — 50-state localisation</li>
+          <li>Federal Buyers Guide + state DMV</li>
+          <li>Sales &amp; use tax per state/county</li>
+          <li>NMVTIS · Carfax · KBB · cars.com</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Poppins';font-size:18px;font-weight:700;margin:38px 0 4px">The localisation layer — what swaps per market</h3>
+    <p class="lede" style="font-size:15px">Seven pluggable components carry every market difference. The rest of the platform never changes.</p>
+    <div class="pillbar">
+      <span class="pill"><i class="fa-solid fa-percent"></i>Tax engine — GST / sales tax / stamp duty</span>
+      <span class="pill"><i class="fa-solid fa-scale-balanced"></i>Compliance pack — required disclosures &amp; forms</span>
+      <span class="pill"><i class="fa-solid fa-magnifying-glass-chart"></i>Vehicle-data providers — registers &amp; history</span>
+      <span class="pill"><i class="fa-solid fa-file-pdf"></i>Document templates — localised point-of-sale docs</span>
+      <span class="pill"><i class="fa-solid fa-store"></i>Marketplace connectors — local listing sites</span>
+      <span class="pill"><i class="fa-solid fa-dollar-sign"></i>Currency, units &amp; date formats</span>
+      <span class="pill"><i class="fa-solid fa-id-card"></i>Dealer-licensing fields per jurisdiction</span>
+    </div>
+
+    <h3 style="font-family:'Poppins';font-size:18px;font-weight:700;margin:40px 0 0">How each market maps</h3>
+    <table>
+      <tr><th style="width:22%">Capability</th><th>🇳🇿 New Zealand</th><th>🇦🇺 Australia</th><th>🇺🇸 United States</th></tr>
+      <tr><td><b>Sales tax</b></td><td>GST 15%</td><td>GST 10% + state stamp duty on transfer</td><td>State &amp; county sales / use tax (no federal GST)</td></tr>
+      <tr><td><b>Vehicle identity &amp; history</b></td><td>CarJam · MotorWeb · NZTA</td><td>PPSR · CarHistory · state rego lookups</td><td>NMVTIS · Carfax · AutoCheck</td></tr>
+      <tr><td><b>Security / title check</b></td><td>PPSR money-owing</td><td>PPSR security interest</td><td>Title brand &amp; lien (NMVTIS / DMV)</td></tr>
+      <tr><td><b>Valuation</b></td><td>AutoGrab · RedBook · Glass's</td><td>RedBook · Glass's Guide · AutoGrab</td><td>Kelley Blue Book · J.D. Power (NADA) · Black Book</td></tr>
+      <tr><td><b>Mandatory point-of-sale disclosure</b></td><td>Consumer Information Notice (CIN) + VEEEL energy label</td><td>State form-of-disclosure / notice + cooling-off where applicable</td><td>FTC <b>Buyers Guide</b> window sticker + federal odometer disclosure</td></tr>
+      <tr><td><b>Registration / title transfer</b></td><td>NZTA MR13B / MR13C (online)</td><td>State transfer (VIC / NSW / QLD … each differ)</td><td>State DMV title &amp; registration transfer</td></tr>
+      <tr><td><b>Dealer licensing</b></td><td>RMVT (Registered Motor Vehicle Trader)</td><td>State licence — LMCT (VIC), MD licence (NSW) etc.</td><td>State dealer licence &amp; bond per state</td></tr>
+      <tr><td><b>Consumer-law warranty</b></td><td>Consumer Guarantees Act</td><td>Australian Consumer Law + state statutory warranty</td><td>State lemon laws + FTC rule (as-is vs warranty)</td></tr>
+      <tr><td><b>Lead marketplaces</b></td><td>TradeMe Motors</td><td>carsales.com.au · Gumtree · Facebook</td><td>cars.com · Autotrader · CarGurus · Facebook</td></tr>
+      <tr><td><b>Accounting</b></td><td>Xero · MYOB</td><td>Xero · MYOB · QuickBooks</td><td>QuickBooks · Xero</td></tr>
+    </table>
+    <p style="margin-top:14px;font-size:12.5px;color:var(--muted)">Australian and US compliance content is finalised with a local motor-trade / legal advisor in each jurisdiction before that market goes live, exactly as the NZ pack is. US rollout is phased state-by-state given title, tax and licensing all sit at state level.</p>
+
+    <h3 style="font-family:'Poppins';font-size:18px;font-weight:700;margin:40px 0 0">Expansion roadmap</h3>
+    <div class="road">
+      <div class="step"><div class="ph">Now · Market 1</div><b>New Zealand — launch &amp; prove</b><p>Ship the full platform, win NZ dealers, and harden the localisation layer against a real, regulated market.</p></div>
+      <div class="step"><div class="ph">Next · Market 2</div><b>Australia — the natural second market</b><p>Build the AU compliance pack &amp; tax engine (10% GST + stamp duty), connect PPSR, CarHistory &amp; carsales.com.au, add state dealer-licensing fields, and localise the point-of-sale documents. Closest market, shared language, biggest near-term opportunity.</p></div>
+      <div class="step"><div class="ph">Then · Market 3</div><b>United States — scale state by state</b><p>Add the US compliance pack — FTC Buyers Guide, federal odometer disclosure and per-state DMV title/registration — wire NMVTIS, Carfax &amp; KBB, and a state-by-state sales-tax engine. Launch in a beachhead state, then expand.</p></div>
+      <div class="step"><div class="ph">Throughout</div><b>One codebase, many markets</b><p>Every market runs on the same core — so a feature built for one dealer ships to all three. New countries are added by configuring a localisation pack, not forking the product.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="nm">VELOCITY <span>ONE</span></div>
+    <p>One platform. Unlimited velocity. — the complete, NZ-compliant Dealership Management Platform.</p>
+    <p style="margin-top:6px;color:#6f7682">Feature scope · confidential · prepared for presentation.</p>
+  </div>
+</footer>
+
+<button class="print" onclick="window.print()"><i class="fa-solid fa-file-arrow-down"></i> Save as PDF</button>
+</body>
+</html>
